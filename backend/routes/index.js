@@ -17,6 +17,10 @@ router.get("/dark-mode", function (req, res) {
   res.redirect("/");
 });
 
+//Desafio Aula 24
+
+//Parte 1
+
 router.get("/desafio24", function (req, res) {
   req.session.dados = {
     email: "grupo5@gmail.com",
@@ -32,6 +36,8 @@ router.get("/desafio24", function (req, res) {
   }
 });
 
+//Parte 2
+
 router.post("/usuario/login", function (req, res) {
   req.session.dados = {
     email: "grupo5@gmail.com",
@@ -41,8 +47,8 @@ router.post("/usuario/login", function (req, res) {
   let hash = bcrypt.hashSync("senhagrupo5", 10);
 
   if (
-    typeof re.session.dados.email !== "undefined" &&
-    bcrypt.compareSync(re.session.dados.senha, hash) === true
+    typeof req.session.dados.email !== "undefined" &&
+    bcrypt.compareSync(req.session.dados.senha, hash) === true
   ) {
     req.session = dadosSalvos;
     return res.render("Ok");
