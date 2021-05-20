@@ -28,6 +28,12 @@ function validator(req, res, next) {
     name: yup.string().required(),
     type: yup.string().required(),
     description: yup.string().required().min(10),
+    healthPoints: yup.number(),
+    specialAttack: yup.number(),
+    defense: yup.number(),
+    attack: yup.number(),
+    experience: yup.number(),
+    specialDefense: yup.number(),
   });
 
   if (!schema.isValidSync(req.body)) {

@@ -41,7 +41,7 @@ const LegendariesService = {
 
     return pokemon;
   },
-  createLegendary: (
+  createLegendary: async (
     name,
     description,
     type,
@@ -52,8 +52,7 @@ const LegendariesService = {
     experience,
     specialDefense
   ) => {
-    const newLegendary = new LegendaryModel(
-      uuidv4(),
+    const newLegendary = await database.Legendary.create({
       name,
       description,
       type,
@@ -62,13 +61,54 @@ const LegendariesService = {
       defense,
       attack,
       experience,
-      specialDefense
-    );
+      specialDefense,
+    });
     return newLegendary;
   },
   getLegendaryList: async () => {
     const resultados = await database.Legendary.findAll();
     return resultados;
+  },
+  updateLegendary: async (
+    id,
+    name,
+    description,
+    type,
+    healthPoints,
+    specialAttack,
+    defense,
+    attack,
+    experience,
+    specialDefense
+  ) => {
+    const updatedLegendary = await database.Legendary.update(
+      {
+        name,
+        description,
+        type,
+        healthPoints,
+        specialAttack,
+        defense,
+        attack,
+        experience,
+        specialDefense,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return updatedLegendary;
+  },
+  destroyLegendary: async (id) => {
+    const destroyedLegendary = await database.Legendary.destroy({
+      where: {
+        id,
+      },
+    });
+    return destroyedLegendary;
   },
 };
 
