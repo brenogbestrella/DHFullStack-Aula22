@@ -1,13 +1,21 @@
 const LegendariesService = require("../services/LegendariesService");
-const { validationResult } = require("express-validator");
+const database = require("../database/models");
+
+// MVC - MODEL / VIEW / CONTROLLER
+// VIEW = LAYOUT / DESENHO
+// CONTROLLER = ARTICULADOR / MEIO DE CAMPO / INTERMEDIADOR
+// MODEL = INFORMAÇÃO
 
 const controller = {
-  index: (req, res) => {
+  index: async (req, res) => {
     const { name } = req.query;
+    const legendary = await database.Legendary.findOne({
+      where: {
+        name,
+      },
+    });
 
-    const legendary = LegendariesService.listPokemonData(name);
-
-    return res.json(legendary);
+    return res.render("legendaries", { legendary });
   },
   indexAll: async (req, res) => {
     const list = await LegendariesService.getLegendaryList();
@@ -67,7 +75,7 @@ const controller = {
       specialDefense
     );
 
-    res.json(updatedLegendary);
+    return res.json(updatedLegendary);
   },
   destroy: async (req, res) => {
     const { id } = req.params;

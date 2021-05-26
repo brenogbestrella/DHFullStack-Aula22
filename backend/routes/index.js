@@ -2,6 +2,8 @@ var express = require("express");
 var bcrypt = require("bcryptjs");
 var router = express.Router();
 
+//MVC = MODEL / VIEW / CONTROLLER
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   console.log(req.cookies);
@@ -21,41 +23,41 @@ router.get("/dark-mode", function (req, res) {
 
 //Parte 1
 
-router.get("/desafio24", function (req, res) {
-  req.session.dados = {
-    email: "grupo5@gmail.com",
-    senha: "senhagrupo5",
-  };
-  let dadosSalvos = req.session.dados;
-  let hash = bcrypt.hashSync("senhagrupo5", 10);
+// router.get("/desafio24", function (req, res) {
+//   req.session.dados = {
+//     email: "grupo5@gmail.com",
+//     senha: "senhagrupo5",
+//   };
+//   let dadosSalvos = req.session.dados;
+//   let hash = bcrypt.hashSync("senhagrupo5", 10);
 
-  if (bcrypt.compareSync("senhagrupo5", hash)) {
-    res.json(dadosSalvos);
-  } else {
-    res.json("Usuário ou senha incorretos");
-  }
-});
+//   if (bcrypt.compareSync("senhagrupo5", hash)) {
+//     res.json(dadosSalvos);
+//   } else {
+//     res.json("Usuário ou senha incorretos");
+//   }
+// });
 
 //Parte 2
 
-router.post("/usuario/login", function (req, res) {
-  req.session.dados = {
-    email: "grupo5@gmail.com",
-    senha: "senhagrupo5",
-  };
-  let dadosSalvos = req.session.dados;
-  let hash = bcrypt.hashSync("senhagrupo5", 10);
+// router.post("/usuario/login", function (req, res) {
+//   req.session.dados = {
+//     email: "grupo5@gmail.com",
+//     senha: "senhagrupo5",
+//   };
+//   let dadosSalvos = req.session.dados;
+//   let hash = bcrypt.hashSync("senhagrupo5", 10);
 
-  if (
-    typeof req.session.dados.email !== "undefined" &&
-    bcrypt.compareSync(req.session.dados.senha, hash) === true
-  ) {
-    req.session = dadosSalvos;
-    return res.render("Ok");
-  } else {
-    return res.redirect("/usuario/login", 403);
-  }
-});
+//   if (
+//     typeof req.session.dados.email !== "undefined" &&
+//     bcrypt.compareSync(req.session.dados.senha, hash) === true
+//   ) {
+//     req.session = dadosSalvos;
+//     return res.render("Ok");
+//   } else {
+//     return res.redirect("/usuario/login", 403);
+//   }
+// });
 
 // router.get('/legendaries')
 
