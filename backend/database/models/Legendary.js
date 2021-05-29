@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+  const Legendary = sequelize.define(
     "Legendary",
     {
       id: {
@@ -40,3 +40,14 @@ module.exports = (sequelize, DataTypes) =>
       timestamps: false,
     }
   );
+
+  Legendary.associate = function (models) {
+    Legendary.belongsToMany(models.Coach, {
+      through: models.CoachLegendary,
+      foreignKey: "LEGENDARIES_ID",
+      otherKey: "COACH_ID",
+    });
+  };
+
+  return Legendary;
+};
