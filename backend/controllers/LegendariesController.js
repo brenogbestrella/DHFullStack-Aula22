@@ -7,15 +7,26 @@ const database = require("../database/models");
 // MODEL = INFORMAÇÃO
 
 const controller = {
-  index: async (req, res) => {
-    const { name } = req.query;
-    const legendary = await database.Legendary.findOne({
-      where: {
-        name,
-      },
-    });
+  indexById: async (req, res) => {
+    const { id } = req.params;
+    const legendary = await LegendariesService.getById(id);
 
-    return res.render("legendaries", { legendary });
+    if (!legendary) {
+      return res.status(404).json({ error: `Legendary ${id} not found` });
+    }
+
+    return res.json(legendary);
+  },
+  indexByIdAndAttribute: async (req, res) => {
+    const { id, attribute } = req.params;
+
+    const legendary = await LegendariesService.getAttributeById(id, attribute);
+
+    if (!legendary) {
+      return res.status(404).json({ error: `Legendary ${id} not found` });
+    }
+
+    return res.json(legendary);
   },
   indexAll: async (req, res) => {
     const list = await LegendariesService.getLegendaryList();

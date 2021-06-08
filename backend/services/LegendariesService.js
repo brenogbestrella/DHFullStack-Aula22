@@ -112,6 +112,14 @@ const LegendariesService = {
     });
     return destroyedLegendary;
   },
+  getById: async (id) => {
+    return await database.Legendary.findByPk(id);
+  },
+  getAttributeById: async (id, attribute) => {
+    return await database.Legendary.findByPk(id, {
+      attributes: [attribute],
+    });
+  },
 };
 
 module.exports = LegendariesService;
